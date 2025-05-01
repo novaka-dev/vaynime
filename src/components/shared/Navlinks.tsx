@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface NavlinksProps {
   href: string;
   label: string;
@@ -5,8 +7,8 @@ interface NavlinksProps {
 
 export const Navlinks = ({ href, label }: NavlinksProps) => {
   return (
-    <li className="duration-300 font-medium ease-linear hover:text-primary py-3">
-      <a href={href}>{label}</a>
+    <li className="duration-300 font-medium ease-linear hover:text-primary">
+      <Link to={href}>{label}</Link>
     </li>
   );
 };

@@ -1,20 +1,22 @@
 import { useEffect } from "react";
 import { Footer } from "./elements/Footer";
 import { Navbar } from "./elements/Navbar";
+import { Outlet } from "react-router-dom";
 
 interface LayoutProps {
   title: string;
-  children: React.ReactNode;
 }
 
-export const Layout = ({ title, children }: LayoutProps) => {
+export const Layout = ({ title }: LayoutProps) => {
   useEffect(() => {
     document.title = title;
   }, [title]);
   return (
     <>
       <Navbar />
-      <main>{children}</main>
+      <main>
+        <Outlet /> {/* Hero akan otomatis muncul hanya di Home */}
+      </main>
       <Footer />
     </>
   );

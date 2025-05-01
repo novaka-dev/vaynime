@@ -1,45 +1,120 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 import { Container } from "../shared/Container";
 import { Navlinks } from "../shared/Navlinks";
 
+const genres = [
+  "Action",
+  "Adventure",
+  "Comedy",
+  "Drama",
+  "Fantasy",
+  "Music",
+  "Romance",
+  "Sci-Fi",
+  "Seinen",
+  "Shojo",
+  "Shonen",
+  "Slice of life",
+  "Sports",
+  "Supernatural",
+  "Thriller",
+];
+
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Anime Popular", href: "/populer" },
-  { label: "Genre", href: "/genre" },
-  { label: "Jadwal", href: "/jadwal" },
+  { href: "/new", label: "New" },
+  { href: "/popular", label: "Popular" },
 ];
 
 export const Navbar = () => {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
   return (
-    <header className="absolute inset-x-0 top-0 z-50 py-6">
+    <header className="w-full top-0 z-50 py-3 bg-background/80 backdrop-blur border-b">
       <Container>
-        <nav className="w-full flex gap-6 relative justify-between">
-          {/* Logo */}
-          <div className="min-w-max inline-flex relative">
-            <a href="/" className="flex relative items-center gap-2">
-              <img
-                src="/public/vaynime-logo.png"
-                alt="logo"
-                className="w-16 h-16"
-              />
-              <div className="font-semibold inline-flex text-lg ">Vaynime</div>
-            </a>
+        <nav className="w-full flex justify-between items-center">
+          {/* Logo dan Navigasi */}
+          <div className="flex items-center gap-10">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-2">
+              <img src="/vaynime-logo.png" alt="logo" className="w-12 h-12" />
+              <span className="text-xl font-bold">Vaynime</span>
+            </Link>
+
+            {/* Navigasi Utama */}
+            <ul className="flex gap-6 text-base font-medium text-muted-foreground">
+              {navLinks.map(({ href, label }) => (
+                <Navlinks key={href} href={href} label={label} />
+              ))}
+
+              {/* Dropdown Categories */}
+              <li>
+                <DropdownMenu onOpenChange={setIsCategoryOpen} modal={false}>
+                  <DropdownMenuTrigger className="flex items-center gap-1 duration-300 font-medium ease-linear hover:text-primary ">
+                    Categories
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        isCategoryOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </DropdownMenuTrigger>
+
+                  <DropdownMenuContent
+                    align="start"
+                    className="p-6 w-[700px] bg-background border shadow-xl grid grid-cols-[1fr_auto_2fr] gap-6 mt-2"
+                  >
+                    {/* Kategori Link */}
+                    <div className="flex flex-col gap-3 text-sm">
+                      <Link to="/browse-all" className="hover:underline">
+                        Browse All (A-Z)
+                      </Link>
+                      <Link to="/calendar" className="hover:underline">
+                        Release Calendar
+                      </Link>
+                      <Link to="/music-videos" className="hover:underline">
+                        Music Videos & Concerts
+                      </Link>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="w-px bg-border" />
+
+                    {/* Genre List */}
+                    <div>
+                      <p className="text-xs font-semibold mb-2 text-muted-foreground">
+                        GENRES
+                      </p>
+                      <div className="grid grid-cols-3 gap-2 text-sm">
+                        {genres.map((genre, idx) => (
+                          <Link
+                            key={idx}
+                            to={`/genre/${genre
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}`}
+                            className="hover:underline"
+                          >
+                            {genre}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li>
+            </ul>
           </div>
 
-          {/* Nav Links */}
-          <div
-            className="flex flex-col lg:flex-row w-full lg:justify-between lg:items-center 
-                      absolute top-full left-0 lg:static lg:top-0 bg-body lg:bg-transparent 
-                      border-x border-x-box-border lg:border-x-0 lg:h-auto h-0 overflow-hidden"
-          >
-            <ul
-              className="border-t border-box-border lg:border-t-0 px-6 lg:px-0 
-                        pt-6 lg:pt-0 flex flex-col lg:flex-row gap-y-4 gap-x-3 
-                        text-lg text-heading-2 w-full lg:justify-center lg:items-center"
-            >
-              {navLinks.map((Link, index) => (
-                <Navlinks key={index} href={Link.href} label={Link.label} />
-              ))}
-            </ul>
+          {/* Tombol Login */}
+          <div>
+            <Button variant="default">Login</Button>
           </div>
         </nav>
       </Container>
