@@ -9,7 +9,7 @@ interface LayoutProps {
 
 export const Layout = ({ title }: LayoutProps) => {
   useEffect(() => {
-    document.title = title;
+    if (title) document.title = `${title} - Vaynime`;
   }, [title]);
   return (
     <>
