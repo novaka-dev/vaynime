@@ -62,15 +62,15 @@ export function Hero() {
   const progressCircle = useRef<SVGSVGElement>(null);
   const progressContent = useRef<HTMLSpanElement>(null);
 
-  const onAutoplayTimeLeft = (_: unknown, time: number, progress: number) => {
-    if (progressCircle.current && progressContent.current) {
-      progressCircle.current.style.setProperty(
-        "--progress",
-        String(1 - progress)
-      );
-      progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
-    }
-  };
+  // const onAutoplayTimeLeft = (_: unknown, time: number, progress: number) => {
+  //   if (progressCircle.current && progressContent.current) {
+  //     progressCircle.current.style.setProperty(
+  //       "--progress",
+  //       String(1 - progress)
+  //     );
+  //     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
+  //   }
+  // };
 
   return (
     <section className="w-full h-screen overflow-hidden relative">
@@ -92,7 +92,7 @@ export function Hero() {
         fadeEffect={{ crossFade: true }}
         speed={1000}
         className="h-full"
-        onAutoplayTimeLeft={onAutoplayTimeLeft}
+        // onAutoplayTimeLeft={onAutoplayTimeLeft}
       >
         {animeList.map((anime, index) => (
           <SwiperSlide key={index} className="h-screen relative z-0">
