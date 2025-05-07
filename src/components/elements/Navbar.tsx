@@ -10,24 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Container } from "../shared/Container";
 import { Navlinks } from "../shared/Navlinks";
-
-const genres = [
-  "Action",
-  "Adventure",
-  "Comedy",
-  "Drama",
-  "Fantasy",
-  "Music",
-  "Romance",
-  "Sci-Fi",
-  "Seinen",
-  "Shojo",
-  "Shonen",
-  "Slice of life",
-  "Sports",
-  "Supernatural",
-  "Thriller",
-];
+import { genres } from "@/lib/dummy-data";
 
 const navLinks = [
   { href: "/new", label: "New" },
@@ -95,15 +78,13 @@ export const Navbar = () => {
                         GENRES
                       </p>
                       <div className="grid grid-cols-3 gap-2 text-sm">
-                        {genres.map((genre, idx) => (
+                        {genres.map((genre) => (
                           <Link
-                            key={idx}
-                            to={`/genre/${genre
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}`}
-                            className="hover:underline"
+                            key={genre.id}
+                            to={`/genre/${genre.id}`}
+                            className="hover:underline hover:text-primary"
                           >
-                            {genre}
+                            {genre.name}
                           </Link>
                         ))}
                       </div>
