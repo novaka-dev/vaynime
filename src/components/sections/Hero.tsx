@@ -41,7 +41,7 @@ const CustomNavigation = () => {
   const swiper = useSwiper();
 
   return (
-    <div className="absolute bottom-10 right-10 z-20 flex gap-4">
+    <div className="absolute bottom-40 right-10 z-100 flex gap-4">
       <button
         onClick={() => swiper.slidePrev()}
         className="p-3 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300 hover:scale-110"
@@ -73,7 +73,7 @@ export function Hero() {
   // };
 
   return (
-    <section className="w-full h-screen overflow-hidden relative">
+    <section className="w-full h-[120vh] overflow-hidden relative">
       <Swiper
         modules={[Autoplay, Navigation, Pagination, EffectFade]}
         autoplay={{
@@ -83,7 +83,7 @@ export function Hero() {
         pagination={{
           clickable: true,
           renderBullet: (_, className) => {
-            return `<span class="${className} !w-2 !h-2 !bg-white !opacity-50 hover:!opacity-100 !transition-all !duration-300 !mx-1"></span>`;
+            return `<span class="${className} !w-2 !h-2 !mb-40 !bg-white !opacity-50 hover:!opacity-100 !transition-all  !duration-300 !mx-1"></span>`;
           },
           dynamicBullets: true,
         }}
@@ -169,6 +169,7 @@ export function Hero() {
           ></span>
         </div>
       </Swiper>
+      <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-zinc-950 to-transparent z-10" />
     </section>
   );
 }
