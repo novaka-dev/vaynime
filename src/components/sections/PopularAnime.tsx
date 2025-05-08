@@ -1,11 +1,7 @@
-// src/sections/PopularAnime.tsx
-"use client";
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useState } from "react";
 import { popularAnime } from "@/data/popularAnime";
-import { Button } from "../ui/button";
 import { AnimeCard } from "../shared/AnimeCard";
 
 export const PopularAnime = () => {
@@ -18,6 +14,7 @@ export const PopularAnime = () => {
       "(min-width: 640px)": { slidesToScroll: "auto" },
     },
   });
+
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
 
@@ -42,38 +39,51 @@ export const PopularAnime = () => {
     emblaApi.on("reInit", onSelect);
     return () => {
       emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="container py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Popular Near You</h2>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={scrollPrev}
-            disabled={!prevBtnEnabled}
-            className="rounded-full bg-white/10 hover:bg-white/20 border-white/20"
-          >
-            <ChevronLeft className="h-4 w-4 text-white" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={scrollNext}
-            disabled={!nextBtnEnabled}
-            className="rounded-full bg-white/10 hover:bg-white/20 border-white/20"
-          >
-            <ChevronRight className="h-4 w-4 text-white" />
-          </Button>
-        </div>
+    <section className=" py-16 relative min-h-[150vh]">
+      <div className="absolute -top-32 left-0 w-full h-32 bg-gradient-to-b from-black to-transparent z-0" />
+      <div className="flex justify-between items-center mb-4 px-10">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 pb-2 to-primary bg-clip-text text-transparent">
+          Popular Near You
+        </h2>
       </div>
 
       <div className="relative">
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-4">
+        {/* Tombol kiri */}
+        {prevBtnEnabled && (
+          <button
+            onClick={scrollPrev}
+            aria-label="Scroll left"
+            className="absolute left-0 top-0 h-full w-12 z-20 flex items-center justify-center bg-gradient-to-r from-black/30 to-transparent hover:from-black/60 transition-all duration-500 "
+          >
+            <ChevronLeft className="h-8 w-8 text-white" />
+          </button>
+        )}
+
+        {/* Tombol kanan */}
+        {nextBtnEnabled && (
+          <button
+            onClick={scrollNext}
+            aria-label="Scroll right"
+            className="absolute right-0 top-0 h-full w-12 z-20 flex items-center justify-center transition-all duration-500 bg-gradient-to-l from-black/30 to-transparent hover:from-black/60 "
+          >
+            <ChevronRight className="h-8 w-8 text-white" />
+          </button>
+        )}
+
+        {/* Efek vignette kiri */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-16 z-10 bg-gradient-to-r from-zinc-950 to-transparent" />
+
+        {/* Efek vignette kanan */}
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-16 z-10 bg-gradient-to-l from-zinc-950 to-transparent" />
+
+        {/* Carousel */}
+        <div className="overflow-hidden px-4 sm:px-6 lg:px-8" ref={emblaRef}>
+          <div className="flex gap-4 will-change-transform">
             {popularAnime.map((anime) => (
               <div
                 key={anime.id}
